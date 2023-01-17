@@ -1,6 +1,5 @@
 // variables that need to be set
-
-// var = questionIndex = 0;  // not sure if i need this yet
+var questionIndex = 0
 
 var countdownTimer = document.querySelector('#time');  // timer 
 var secondsLeft = 90                                   // timer 
@@ -8,7 +7,7 @@ var secondsLeft = 90                                   // timer
 var timerEl = document.querySelector("#timer");  // timer 
 var startButtonEl = document.querySelector('#start');    // start button
 var submitButtonEl = document.querySelector('#submit'); // submit button
-var startScreenEl = document.querySelector('#startScreen'); // start screen
+var startScreenEl = document.querySelector('#start-screen'); // start screen
 var questionsEl = document.querySelector('#questions'); // questions
 var choicesEl = document.querySelector('#choices'); // choices
 var questionTitlesEl = document.querySelector('#question-title'); // question title
@@ -19,9 +18,13 @@ var feedbackEl = document.querySelector('#feedback'); // feedback
 
 
 
+
+
+
+
 // clicking start button starts quiz and timer
 
-startButton.addEventListener('click', function {   
+startButtonEl.addEventListener('click', function() {   
     startQuiz();
     startTimer();
 })
@@ -29,20 +32,51 @@ startButton.addEventListener('click', function {
 // event listener added to start button 
 
 function startQuiz() {
-    // startScreenEl.setAttribute('class', 'hide'); // hide start screen
     
-    
+    startScreenEl.classList.add("hide");
+    questionsEl.classList.remove("hide");
 
+    renderQuestion();
+};
+
+function renderQuestion() {
+    var currentQuestion = questions[questionIndex];
+    var questionText = currentQuestion.title;
+
+    questionTitlesEl.textContent = questionText;
+
+    for (var i = 0; i < currentQuestion.choices.length; i++) {
+        var button = document.createElement('button');
+        button.textContent = currentQuestion.choices[i];
+        button.setAttribute('data-question', questionIndex)
+        button.addEventListener('click', function() {
+        var questionAnswer = currentQuestion.answer
+        console.log(questionAnswer)
+        /**
+         * create var that references button text
+         * add if statement to check question equals text of button clicked
+         * if correct, render next question using questionIndex and renderQuestion function
+         * if wrong, remove time
+         * also add check to see if you've reached the last question and end game then
+        
+         */
+        });
+        choicesEl.appendChild(button);
+    }
 };
 
 
 function startTimer() {
-    // secondsLeft--;
+    
     var timerInterval = setInterval(function () {
         secondsLeft--;
-        timerEl.textContent = secondsLeft;
+        countdownTimer.textContent = secondsLeft;
 
-    }, 1000)
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+            endScreenEl.classList.remove("hide");
+        };}, 1000);
+
 };
 
 // function that starts the quiz and the timer above
