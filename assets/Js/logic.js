@@ -21,18 +21,16 @@ var feedbackEl = document.querySelector('#feedback'); // feedback
 
 // clicking start button starts quiz and timer
 
-startButton.addEventListener('click', function {
-    // countdownTimer.textContent = '00:00:00';  // double check if needed 
+startButton.addEventListener('click', function {   
     startQuiz();
     startTimer();
-    
 })
 
 // event listener added to start button 
 
 function startQuiz() {
-    startScreenEl.setAttribute('class', 'hide'); // hide start screen
-
+    // startScreenEl.setAttribute('class', 'hide'); // hide start screen
+    
     
 
 };
