@@ -2,9 +2,9 @@
 
 var questions = [
     {
-        title: "Which statement cannot be used to declare a variable in JavaScript?",
-        choices: ["Let", "Var", "Int"],
-        answer: "Int"
+        title: "Which statement can not be used to declare a variable in JavaScript?",
+        choices: ["A. Let", "B. Var", "C. Int"],
+        answer: "C. Int"
     },
 
     {
