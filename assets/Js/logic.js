@@ -2,9 +2,9 @@
 var questionIndex = 0
 
 var countdownTimer = document.querySelector('#time');  // timer 
-var secondsLeft = 90     
-                          // timer 
-
+var secondsLeft = 90;     // to be changed later 
+var timerInterval;
+ 
 var timerEl = document.querySelector("#timer");  // timer 
 var startButtonEl = document.querySelector('#start');    // start button
 var submitButtonEl = document.querySelector('#submit'); // submit button
@@ -42,19 +42,18 @@ function startQuiz() {
     renderQuestion();
 };
 
-    var currentQuestion = questions[questionIndex];
-    var questionText = currentQuestion.title;
+
     
     
 
 function renderQuestion() {
-    // var currentQuestion = questions[questionIndex];
-    // var questionText = currentQuestion.title;
-//    questionIndex = x;  // index of question added to try 
-//    var nextQuestion = questions[questionIndex+1]; // index of next question added to try 
+    
+    var currentQuestion = questions[questionIndex];
+    var questionText = currentQuestion.title;
 
     questionTitlesEl.textContent = questionText;
-
+    choicesEl.innerHTML = "";
+    
 
     for (var i = 0; i < currentQuestion.choices.length; i++) {
         var button = document.createElement('button');
@@ -64,6 +63,7 @@ function renderQuestion() {
         // button.textContent = arrayChoices[i];
 
         button.setAttribute('data-question', questionIndex)
+        
         button.addEventListener('click', function() {
         var questionAnswer = currentQuestion.answer
         console.log(questionAnswer)
@@ -82,8 +82,18 @@ function renderQuestion() {
             feedbackEl.textContent = 'Correct!';
             feedbackEl.setAttribute('style', 'color: green;')
             
-            nextQuestion();
             totalScore += 10;
+            questionIndex++;
+            if (questionIndex === questions.length) {
+              console.log("Finished all questions!")
+              gameOver();
+
+              
+            } else {
+
+            renderQuestion();
+        };
+            
             
         } else {
             // wrong
@@ -103,30 +113,29 @@ function renderQuestion() {
 
 function startTimer() {
     
-    var timerInterval = setInterval(function () {
+     timerInterval = setInterval(function () {
         secondsLeft--;
         countdownTimer.textContent = secondsLeft;
 
         if (secondsLeft <= 0) {
-            clearInterval(timerInterval);
-            endScreenEl.classList.remove("hide");
-            feedbackEl.classList.add("hide");  // hide the feedback 
-            countdownTimer.textContent = "0"; // reset timer interval
-            gameOver(); // not sure if it needs to be here
+           
+            gameOver();
+
         };}, 1000);
 
 };
 
 // function that starts the quiz and the timer above
 
-// var nextQuestion = questions[questionIndex++];
 
 
-function nextQuestion() {
-    
+
+
+
+
 
      
-};
+
     
 
 
@@ -146,14 +155,53 @@ function nextQuestion() {
 function gameOver() {
     console.log("your score: " + totalScore);
     finalScoreEl.textContent = totalScore;
+    endScreenEl.classList.remove("hide");
+            feedbackEl.classList.add("hide");  // hide the feedback 
+            countdownTimer.textContent = "0"; // reset timer interval
+            clearInterval(timerInterval);
     
 };
+
+
+
+
+submitButtonEl.addEventListener('click', function() {
+    
+    savedScore();
+
+});
 
 
 // score is saved in local storage
 
 function savedScore() {
+    
+    var scores = JSON.parse(localStorage.getItem('scores')) || [];  // look it up again 
+
+    var userInitials = initialsEl.value.trim();
+
+    if (userInitials === "") {
+        alert("Please enter your initials");
+    } else if (userInitials.length > 3) {
+        alert("Initials must be 3 characters or less");
+    } else {
+        var scoreObject = {
+            initials: userInitials,
+            score: totalScore
+        }
+
+        scores.push(scoreObject);
+        
+        localStorage.setItem("scores", JSON.stringify(scores));
+
+       
+        console.log("Player's initials: " + localStorage.getItem("user-initials"));
+        console.log("Player's score: " + localStorage.getItem("user-score"));
+        window.location.assign("highscores.html");
+    }
+
+
+
 
 };
 
-function highScores() {};
