@@ -121,6 +121,7 @@ function gameOver() {
   finalScoreEl.textContent = totalScore;
   endScreenEl.classList.remove("hide");
   feedbackEl.classList.add("hide"); // hide the feedback
+  questionsEl.classList.add("hide"); // hides last question
   countdownTimer.textContent = "0"; // reset timer interval
   clearInterval(timerInterval);
 }
