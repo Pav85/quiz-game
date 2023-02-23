@@ -21,9 +21,13 @@ function displayScores() {
 
 displayScores();
 
+// function that clears all scores from local storage
+
 function clearScores() {
   localStorage.clear();
 }
+
+// clear scores button event
 
 clearScoresButton.addEventListener("click", function () {
   clearScores();
