@@ -50,21 +50,12 @@ function renderQuestion() {
       "margin: 10px; width: 100%; min-height: 70px;"
     );
     button.textContent = currentQuestion.choices[i];
-    // button.textContent = arrayChoices[i];
 
     button.setAttribute("data-question", questionIndex);
 
     button.addEventListener("click", function () {
       var questionAnswer = currentQuestion.answer;
       console.log(questionAnswer);
-      /**
-         * create var that references button text
-         * add if statement to check question equals text of button clicked
-         * if correct, render next question using questionIndex and renderQuestion function
-         * if wrong, remove time
-         * also add check to see if you've reached the last question and end game then
-        
-         */
 
       if (this.textContent == questionAnswer) {
         // correct
@@ -105,16 +96,7 @@ function startTimer() {
   }, 1000);
 }
 
-// function that starts the quiz and the timer above
-
-// once the quiz starts few questions need to be displayed
-
-// each question has three choices and one answer is correct
-
-// once the choice is made the next question button is pressed next question is presented
-// if answer is incorrect 10 seconds is deducted from the timer
-
-// when the timer reaches 0 the quiz is over
+// function when game over
 
 function gameOver() {
   console.log("your score: " + totalScore);
