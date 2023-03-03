@@ -10,7 +10,11 @@ function displayScores() {
       var scoresListItem = document.createElement("li");
       scoresListItem.textContent = scores[i].initials + " - " + scores[i].score;
 
-      if (scores[i].score < scores[i - i].score) {
+      if (i === 0) {
+        listEl.appendChild(scoresListItem);
+        continue;
+      }
+      if (scores[i].score < scores[i - 1].score) {
         listEl.append(scoresListItem);
       } else {
         listEl.prepend(scoresListItem);
